@@ -111,10 +111,34 @@ keyword1 -- keyword2 -- keyword3
 
 \section{Methods}
 
+\subsection{JaxPM solver}
+
+ODE Equations:
+
+Numerical solver: Dopri5
+
+\subsection{Neural ODE correction}
+
+
+
+
 
 \section{Results}
 
 \subsection{Comparison to FastPM}
+
+% Test setting:
+% 2LPT to a0 = 0.1
+% linear timesteps in a for FastPM
+% Simulation size 128**2 for 128 Mpc/h
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{figures/FastPMvsDopri.pdf}
+    \caption{Absolute relative error of FastPM and JaxPM for different number of time steps compared to a 100 steps FastPM in a 128 Mpc/h box with $128^3$ particles. The number of steps for JaxPM is controlled by the relative error of the Dormand-Prince solver, and matched for the FastPM runs for comparison.}
+    \label{fig:FastPMvsJaxPM}
+\end{figure}
+
+In \autoref{fig:FastPMvsJaxPM} we compare the accuracy of the JaxPM strategy against FlowPM. JaxPM reaches consistently better accuracy than FastPM.
 
 
 \subsection{}

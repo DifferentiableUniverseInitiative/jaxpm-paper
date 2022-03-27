@@ -123,10 +123,28 @@ keyword1 -- keyword2 -- keyword3
 
 ODE Equations:
 
+\begin{equation}
+    \left\{ \begin{array}{ll}
+        \frac{d \mathbf{x}}{d a} & = \frac{1}{a^3 E(a)} \mathbf{v} \\
+        \frac{d \mathbf{v}}{d a} & =  \frac{1}{a^2 E(a)} F_\theta(\mathbf{x}, a) \\
+    \end{array} \right.
+\end{equation}
+where we have introduced the parametric function $F_\theta$, hybrid between a physical model and neural network:
+\begin{equation}
+    F_\theta(\mathbf{x}, a) = \frac{3 \Omega_m}{2}  \nabla \left[ \nabla^{-2}_{PM} (\mathbf{x}) \ast (1 + f_\theta(a)) \right]
+\end{equation}
+where $f_\theta$ is implemented as a Fourier-based isotropic filter defined a b-spline.
+
+
+
 Numerical solver: Dopri5
 
 \subsection{Neural ODE correction}
 
+
+\section{Simulation data}
+
+CAMELS
 
 
 \section{Results}
@@ -146,22 +164,27 @@ Numerical solver: Dopri5
 
 In \autoref{fig:FastPMvsJaxPM} we compare the accuracy of the JaxPM strategy against FlowPM. JaxPM reaches consistently better accuracy than FastPM.
 
-\subsection{Fitting Neural Kernel}
-
-\subsubsection{Loss function on position and velocity}
+\subsection{Fitting Neural Kernel on CAMELS}
 
 \begin{figure*}
     \centering
     \includegraphics[width=0.3\textwidth]{figures/camels_residuals_nocorrection.png}
     \includegraphics[width=0.3\textwidth]{figures/camels_residuals_vel_pos.png}
     \includegraphics[width=0.3\textwidth]{figures/camels_residuals_pk_pos.png}
-    \caption{Caption \nblink{CAMELS_Fitting_PosVel}}
-    \label{fig:my_label}
+    \caption{Comparison of power spectrum ratio between JaxPM run and CAMELS, from left to right: no correction, correction trained on position and velocity, correction trained on position and power spectrum. \nblink{CAMELS_Fitting_PosVel}}
+    \label{fig:training_residuals}
 \end{figure*}
 
+Training with positions, regularized by velocity:
+\begin{equation}
+    \mathcal{L}_1 = \sum_{i} \| \mathbf{x}^{CAMELS}_i - \mathbf{x}_i  \|^2 + \lambda \| \mathbf{v}^{CAMELS}_i - \mathbf{v}_i  \|^2
+\end{equation}
 
-\subsubsection{Loss function on position and power spectrum}
 
+Training with positions, regularized by power spectrum
+\begin{equation}
+    \mathcal{L}_2 = \sum_{i} \| \mathbf{x}^{CAMELS}_i - \mathbf{x}_i  \|^2 + \lambda \|  \mathbf{P_k}_i/\mathbf{P_k}^{CAMELS}_i  - 1  \|^2
+\end{equation}
 
 
 

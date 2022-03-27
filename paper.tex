@@ -48,6 +48,8 @@
 \usepackage{graphicx}	% Including figure files
 \usepackage{amsmath}	% Advanced maths commands
 % \usepackage{amssymb}	% Extra maths symbols
+\usepackage{fontawesome}
+\usepackage{xcolor}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -56,6 +58,12 @@
 % Please keep new commands to a minimum, and use \newcommand not \def to avoid
 % overwriting existing commands. Example:
 %\newcommand{\pcm}{\,cm$^{-2}$}	% per cm-squared
+
+\newcommand{\nblink}[1]{\href{https://github.com/DifferentiableUniverseInitiative/jaxpm-paper/blob/main/notebooks/#1.ipynb}{\faFileCodeO}}
+\newcommand{\github}{\href{https://github.com/DifferentiableUniverseInitiative/JaxPM}{\faGithub}}
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -93,7 +101,7 @@ $^{3}$Another Department, Different Institution, Street Address, City Postal Cod
 
 % Abstract of the paper
 \begin{abstract}
-
+\github
 \end{abstract}
 
 % Select between one and six entries from the list of approved keywords.
@@ -115,12 +123,28 @@ keyword1 -- keyword2 -- keyword3
 
 ODE Equations:
 
+\begin{equation}
+    \left\{ \begin{array}{ll}
+        \frac{d \mathbf{x}}{d a} & = \frac{1}{a^3 E(a)} \mathbf{v} \\
+        \frac{d \mathbf{v}}{d a} & =  \frac{1}{a^2 E(a)} F_\theta(\mathbf{x}, a) \\
+    \end{array} \right.
+\end{equation}
+where we have introduced the parametric function $F_\theta$, hybrid between a physical model and neural network:
+\begin{equation}
+    F_\theta(\mathbf{x}, a) = \frac{3 \Omega_m}{2}  \nabla \left[ \nabla^{-2}_{PM} (\mathbf{x}) \ast (1 + f_\theta(a)) \right]
+\end{equation}
+where $f_\theta$ is implemented as a Fourier-based isotropic filter defined a b-spline.
+
+
+
 Numerical solver: Dopri5
 
 \subsection{Neural ODE correction}
 
 
+\section{Simulation data}
 
+CAMELS
 
 
 \section{Results}
@@ -134,14 +158,34 @@ Numerical solver: Dopri5
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{figures/FastPMvsDopri.pdf}
-    \caption{Absolute relative error of FastPM and JaxPM for different number of time steps compared to a 100 steps FastPM in a 128 Mpc/h box with $128^3$ particles. The number of steps for JaxPM is controlled by the relative error of the Dormand-Prince solver, and matched for the FastPM runs for comparison.}
+    \caption{Absolute relative error of FastPM and JaxPM for different number of time steps compared to a 100 steps FastPM in a 128 Mpc/h box with $128^3$ particles. The number of steps for JaxPM is controlled by the relative error of the Dormand-Prince solver, and matched for the FastPM runs for comparison. \nblink{FastPMvsDOPRI}}
     \label{fig:FastPMvsJaxPM}
 \end{figure}
 
 In \autoref{fig:FastPMvsJaxPM} we compare the accuracy of the JaxPM strategy against FlowPM. JaxPM reaches consistently better accuracy than FastPM.
 
+\subsection{Fitting Neural Kernel on CAMELS}
 
-\subsection{}
+\begin{figure*}
+    \centering
+    \includegraphics[width=0.3\textwidth]{figures/camels_residuals_nocorrection.png}
+    \includegraphics[width=0.3\textwidth]{figures/camels_residuals_vel_pos.png}
+    \includegraphics[width=0.3\textwidth]{figures/camels_residuals_pk_pos.png}
+    \caption{Comparison of power spectrum ratio between JaxPM run and CAMELS, from left to right: no correction, correction trained on position and velocity, correction trained on position and power spectrum. \nblink{CAMELS_Fitting_PosVel}}
+    \label{fig:training_residuals}
+\end{figure*}
+
+Training with positions, regularized by velocity:
+\begin{equation}
+    \mathcal{L}_1 = \sum_{i} \| \mathbf{x}^{CAMELS}_i - \mathbf{x}_i  \|^2 + \lambda \| \mathbf{v}^{CAMELS}_i - \mathbf{v}_i  \|^2
+\end{equation}
+
+
+Training with positions, regularized by power spectrum
+\begin{equation}
+    \mathcal{L}_2 = \sum_{i} \| \mathbf{x}^{CAMELS}_i - \mathbf{x}_i  \|^2 + \lambda \|  \mathbf{P_k}_i/\mathbf{P_k}^{CAMELS}_i  - 1  \|^2
+\end{equation}
+
 
 
 \section{Conclusions}

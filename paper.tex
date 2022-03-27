@@ -48,6 +48,8 @@
 \usepackage{graphicx}	% Including figure files
 \usepackage{amsmath}	% Advanced maths commands
 % \usepackage{amssymb}	% Extra maths symbols
+\usepackage{fontawesome}
+\usepackage{xcolor}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -56,6 +58,12 @@
 % Please keep new commands to a minimum, and use \newcommand not \def to avoid
 % overwriting existing commands. Example:
 %\newcommand{\pcm}{\,cm$^{-2}$}	% per cm-squared
+
+\newcommand{\nblink}[1]{\href{https://github.com/DifferentiableUniverseInitiative/jaxpm-paper/blob/main/notebooks/#1.ipynb}{\faFileCodeO}}
+\newcommand{\github}{\href{https://github.com/DifferentiableUniverseInitiative/JaxPM}{\faGithub}}
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -93,7 +101,7 @@ $^{3}$Another Department, Different Institution, Street Address, City Postal Cod
 
 % Abstract of the paper
 \begin{abstract}
-
+\github
 \end{abstract}
 
 % Select between one and six entries from the list of approved keywords.
@@ -121,8 +129,6 @@ Numerical solver: Dopri5
 
 
 
-
-
 \section{Results}
 
 \subsection{Comparison to FastPM}
@@ -134,14 +140,27 @@ Numerical solver: Dopri5
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{figures/FastPMvsDopri.pdf}
-    \caption{Absolute relative error of FastPM and JaxPM for different number of time steps compared to a 100 steps FastPM in a 128 Mpc/h box with $128^3$ particles. The number of steps for JaxPM is controlled by the relative error of the Dormand-Prince solver, and matched for the FastPM runs for comparison.}
+    \caption{Absolute relative error of FastPM and JaxPM for different number of time steps compared to a 100 steps FastPM in a 128 Mpc/h box with $128^3$ particles. The number of steps for JaxPM is controlled by the relative error of the Dormand-Prince solver, and matched for the FastPM runs for comparison. \nblink{FastPMvsDOPRI}}
     \label{fig:FastPMvsJaxPM}
 \end{figure}
 
 In \autoref{fig:FastPMvsJaxPM} we compare the accuracy of the JaxPM strategy against FlowPM. JaxPM reaches consistently better accuracy than FastPM.
 
+\subsection{Fitting Neural Kernel}
 
-\subsection{}
+\subsubsection{Loss function on position and velocity}
+
+\begin{figure}
+    \centering
+    \includegraphics{}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+
+\subsubsection{Loss function on position and power spectrum}
+
+
 
 
 \section{Conclusions}

@@ -1,6 +1,6 @@
 import numpy as np
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 os.environ[
     'XLA_FLAGS'] = '--xla_gpu_cuda_data_dir=/usr/local/cuda'
 
@@ -39,14 +39,14 @@ flags.DEFINE_integer("mesh_shape", 64,
                      "Number of transverse voxels in the simulation volume")
 flags.DEFINE_float("box_size", 25.,
                    "Transverse comoving size of the simulation volume")
-flags.DEFINE_integer("niter", 2, "Number of iterations of loss fit")
+flags.DEFINE_integer("niter", 500, "Number of iterations of loss fit")
 flags.DEFINE_float("learning_rate", 0.01, "ADAM learning rate for the optim")
 flags.DEFINE_boolean(
     "custom_weight", True,
     "Whether to apply a custom scale weighting to the loss function, or no weighting."
 )
-flags.DEFINE_float("lambda_2", 1., "Positive hyperparameters that allow us to tune the amount of regularisation given by the power spectrum term")
-flags.DEFINE_float("lambda_1", 1., "Positive hyperparameters that allow us to tune the amount of regularisation given by the postion term")
+flags.DEFINE_float("lambda_2", 0.1, "Positive hyperparameters that allow us to tune the amount of regularisation given by the postion term")
+flags.DEFINE_float("lambda_1", 1., "Positive hyperparameters that allow us to tune the amount of regularisation given by the  power spectrum term")
 
 
 
@@ -167,8 +167,8 @@ def main(_):
   plt.savefig('Losses.png' )
   plt.close()
   pickle.dump(
-          {params
-          }, open(FLAGS.filename, "wb"))
+          params
+          , open(FLAGS.filename, "wb"))
 
 
 if __name__ == "__main__":

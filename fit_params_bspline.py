@@ -46,7 +46,7 @@ flags.DEFINE_boolean(
     "Whether to apply a custom scale weighting to the loss function, or no weighting."
 )
 flags.DEFINE_float("lambda_2", 1., "Positive hyperparameters that allow us to tune the amount of regularisation given by the postion term")
-flags.DEFINE_float("lambda_1", 0.1, "Positive hyperparameters that allow us to tune the amount of regularisation given by the  power spectrum term")
+flags.DEFINE_float("lambda_1", 1., "Positive hyperparameters that allow us to tune the amount of regularisation given by the  power spectrum term")
 
 
 

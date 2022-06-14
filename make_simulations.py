@@ -26,7 +26,7 @@ import optax
 import time
 from functools import partial
 
-flags.DEFINE_string("filename", "/data/CAMELS/Sims/PM_sims/lambda1_01/output_",
+flags.DEFINE_string("filename", "/data/CAMELS/Sims/PM_sims/lambda12_1/output_",
                     "Output filename")
 flags.DEFINE_string("snapshots", "/local/home/dl264294/jaxpm-paper/notebooks/snapshots.params", "Scale factor of the napshot to use during the simultaions")
 flags.DEFINE_string("correction_params_NN", "/local/home/dl264294/jaxpm-paper/notebooks/camels_25_64_CV_0.params", "Correction parameter files for NN")

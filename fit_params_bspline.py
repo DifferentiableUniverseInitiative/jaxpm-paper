@@ -27,7 +27,7 @@ import optax
 from functools import partial
 
 
-flags.DEFINE_string("filename", "camels_25_64_CV_0_lambda1_001.params", "Output filename")
+flags.DEFINE_string("filename", "/local/home/dl264294/jaxpm-paper/notebooks/correction_params/camels_25_64_CV_0_lambda1_01.params", "Output filename")
 flags.DEFINE_string("training_sims","/data/CAMELS/Sims/IllustrisTNG_DM/CV_0",
                     "Simulations used to train the NN")
 flags.DEFINE_float("Omega_m", 0.3 - 0.049, "Fiducial CDM and baryonic fraction")
@@ -46,7 +46,7 @@ flags.DEFINE_boolean(
     "Whether to apply a custom scale weighting to the loss function, or no weighting."
 )
 flags.DEFINE_float("lambda_2", 1., "Positive hyperparameters that allow us to tune the amount of regularisation given by the postion term")
-flags.DEFINE_float("lambda_1", 0.01, "Positive hyperparameters that allow us to tune the amount of regularisation given by the  power spectrum term")
+flags.DEFINE_float("lambda_1", 0.1, "Positive hyperparameters that allow us to tune the amount of regularisation given by the  power spectrum term")
 
 
 

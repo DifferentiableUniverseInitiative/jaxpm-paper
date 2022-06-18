@@ -26,11 +26,11 @@ import optax
 import time
 from functools import partial
 
-flags.DEFINE_string("filename", "/data/CAMELS/Sims/PM_sims/lambda12_1/output_",
+flags.DEFINE_string("filename", "/data/CAMELS/Sims/PM_sims/lambda1_01/output_",
                     "Output filename")
 flags.DEFINE_string("snapshots", "/local/home/dl264294/jaxpm-paper/notebooks/snapshots.params", "Scale factor of the napshot to use during the simultaions")
-flags.DEFINE_string("correction_params_NN", "/local/home/dl264294/jaxpm-paper/notebooks/camels_25_64_CV_0.params", "Correction parameter files for NN")
-flags.DEFINE_string("correction_params_PGD", "/local/home/dl264294/jaxpm-paper/notebooks/camels_25_64_pkloss_PGD_CV_0.params", "Correction parameter files for PGD")
+flags.DEFINE_string("correction_params_NN", "/local/home/dl264294/jaxpm-paper/notebooks/correction_params/camels_25_64_CV_0_lambda1_01.params", "Correction parameter files for NN")
+flags.DEFINE_string("correction_params_PGD", "/local/home/dl264294/jaxpm-paper/notebooks/correction_params/camels_25_64_pkloss_PGD_CV_0.params", "Correction parameter files for PGD")
 flags.DEFINE_float("Omega_m", 0.3 - 0.049, "Fiducial CDM and baryonic fraction")
 flags.DEFINE_float("Omega_b",0.049, "Fiducial baryonic matter fraction")
 flags.DEFINE_float("sigma8", 0.8, "Fiducial sigma_8 value")
@@ -78,7 +78,7 @@ def compute_pk(seeds):
       kmin=np.pi / FLAGS.box_size,
       dk=2 * np.pi / FLAGS.box_size)
   params_PGD=pickle.load(open(FLAGS.correction_params_PGD, "rb"))
-  fac_PGD=FLAGS.mesh_shape/FLAGS.box_size/2.56  #2.56= nc/box_size of the original Camels simulations used to train PGD
+  fac_PGD=FLAGS.box_size/FLAGS.mesh_shape*(64/25)  #64/25= nc/box_size of the original Camels simulations used to train PGD
   params_PGD=[params_PGD[0],params_PGD[1]*fac_PGD,params_PGD[2]*fac_PGD]
   k, pk_pgd = power_spectrum(
       (cic_paint(jnp.zeros([FLAGS.mesh_shape,FLAGS.mesh_shape,FLAGS.mesh_shape]), resi[0][-1]+pgd_correction(resi[0][-1], [FLAGS.mesh_shape,FLAGS.mesh_shape,FLAGS.mesh_shape],cosmo,params_PGD))),
@@ -89,7 +89,7 @@ def compute_pk(seeds):
 
 def main(_):
     t = time.time()
-    for i in range(FLAGS.nsims):
+    for i in range(518,FLAGS.nsims):
         k, pk_NN, pk_pgd, pk_i= compute_pk(int(time.time()))
         pickle.dump(
               {    'k':k,

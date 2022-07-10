@@ -1,2 +1,4 @@
 camels_25_64_CV_0_lambda1_001.params= correction parameters computed with lambda1=0.01 and lambda2=1
-camels_25_64_CV_0_lambda1_01.params correction parameters bomputed with lambda1=0.1 and lambda2=1
+camels_25_64_CV_0_lambda1_01.params correction parameters computed with lambda1=0.1 and lambda2=1
+camels_25_64_posloss_CV_0.params correction parameters computed penalizing the particle position 
+camels_25_64_pos_vel.params correction parameters computed penalizing the particle position and velocity

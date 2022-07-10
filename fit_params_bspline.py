@@ -27,8 +27,8 @@ import optax
 from functools import partial
 
 
-flags.DEFINE_string("filename", "/local/home/dl264294/jaxpm-paper/notebooks/correction_params/camels_25_64_CV_5_lambda1_01.params", "Output filename")
-flags.DEFINE_string("training_sims","/data/CAMELS/Sims/IllustrisTNG_DM/CV_5",
+flags.DEFINE_string("filename", "/local/home/dl264294/jaxpm-paper/notebooks/correction_params/camels_25_64_CV_8_lambda1_01.params", "Output filename")
+flags.DEFINE_string("training_sims","/data/CAMELS/Sims/IllustrisTNG_DM/CV_8",
                     "Simulations used to train the NN")
 flags.DEFINE_float("Omega_m", 0.3 - 0.049, "Fiducial CDM and baryonic fraction")
 flags.DEFINE_float("Omega_b",0.049, "Fiducial baryonic matter fraction")
